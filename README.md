@@ -11,7 +11,8 @@
 - 画面中显示检测框、类别、置信度和实时 FPS；
 - 按 `q` 或 `Esc` 正常退出并释放摄像头；
 - 按 `s` 把当前带检测框的画面保存到 `outputs/`；
-- 附带 `detect_image.py`，可对单张图片做同样的检测，方便没有摄像头时验证。
+- 附带 `detect_image.py`，可对单张图片做同样的检测，方便没有摄像头时验证；
+- 附带 `check_env.py`，一键检查 Python、PyTorch、OpenCV、Ultralytics 的版本与 CUDA 状态。
 
 ## 2. 环境要求
 
@@ -44,6 +45,9 @@ pip install -r requirements.txt
 ## 4. 运行
 
 ```bash
+# 先检查环境是否正常
+python check_env.py
+
 # 实时摄像头检测（默认 0 号摄像头）
 python detect_camera.py
 
@@ -83,7 +87,9 @@ python detect_image.py --source assets/sample.jpg
 
 ![检测效果](assets/demo_result.jpg)
 
-在示例图片上的检测结果：两只猫（cat）与遥控器（remote）被正确框出，标签上带有类别名称与置信度。
+摄像头实拍检测结果：桌面上的鼠标（mouse，0.84）被正确框出，同时检出桌面（dining table，0.50）和椅子（chair，0.43），左上角为实时 FPS。
+
+单张图片可用 `python detect_image.py --source assets/sample.jpg` 快速验证，示例图片中的两只猫和遥控器也能被正确检出。
 
 ## 7. 从摄像头画面到检测结果的流程
 
@@ -109,6 +115,7 @@ python detect_image.py --source assets/sample.jpg
 yolo_camera_demo/
 ├── detect_camera.py      # 摄像头实时检测
 ├── detect_image.py       # 单张图片检测
+├── check_env.py          # 环境自检
 ├── requirements.txt      # pip 依赖
 ├── environment.yml       # conda 环境
 ├── .gitignore
@@ -123,3 +130,8 @@ yolo_camera_demo/
 - 只使用 COCO 预训练模型，模型能识别的类别有限，未见过的物体可能检测不到；
 - 摄像头画面仅在本机处理，不上传任何服务器；
 - 本项目代码与文档在 AI 辅助下完成，已在本机实际运行验证。
+
+## 11. 更新记录
+
+- **v1.0**：完成摄像头实时检测与单图检测脚本，整理依赖文件；
+- **v1.1**：新增 check_env.py 环境自检脚本，补充运行效果截图与常见问题说明。
